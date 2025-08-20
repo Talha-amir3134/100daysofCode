@@ -3,11 +3,11 @@ import questions
 import os
 
 def play_game():
-    
+    score = 0
     rand_person_list = random.choices(questions.data,k=2)
     while True:
-        first_question = f"{rand_person_list[0]["name"]},is a {rand_person_list[0]["profession"]} from {rand_person_list[0]["country"]}"
-        second_question = f"{rand_person_list[1]["name"]},is a {rand_person_list[1]["profession"]} from {rand_person_list[1]["country"]}" 
+        first_question = f"{rand_person_list[0]['name']},is a {rand_person_list[0]['profession']} from {rand_person_list[0]['country']}"
+        second_question = f"{rand_person_list[1]['name']},is a {rand_person_list[1]['profession']} from {rand_person_list[1]['country']}" 
         
         print(first_question)
         
@@ -19,10 +19,15 @@ def play_game():
 
         other_index = 1 if user_guess == 1 else 0
         
-        if (rand_person_list[user_guess-1]["followers"] > rand_person_list[other_index]["followers"]):
+        if (rand_person_list[user_guess-1]['followers'] > rand_person_list[other_index]['followers']):
             print("You won")
             rand_person_list[other_index] = random.choice(questions.data)
+            temp = rand_person_list[user_guess-1]
+            rand_person_list[user_guess-1] = rand_person_list[other_index]
+            rand_person_list[other_index] = temp
             os.system("cls")
+            score+=1
+            print(f"You're right, your current score is: {score}")
         else:
             os.system("cls")
             print("You lose")
